@@ -26,12 +26,28 @@ fn ret(vm: &mut VM<JnpVal>, _: &[usize]) {
     vm.ret();
 }
 
+fn jump(vm: &mut VM<JnpVal>, args: &[usize]){
+    let label=vm.get_data(args[0]).clone();
+    vm.jump(label.to_str().unwrap());
+}
+
+fn if_stmt(vm: &mut VM<JnpVal>, args: &[usize]){
+    let condition=vm.operand_pop().to_number().unwrap();
+    //jump to label if condition!=0; i.e. condition=true i.e condition=1
+    if condition!=0{
+        let label=vm.get_data(args[0]).clone();
+        vm.jump(label.to_str().unwrap());
+    }
+}
+
 pub fn instruction_table() -> InstructionTable<JnpVal> {
     let mut it = InstructionTable::new();
     it.insert(Instruction::new(0, "push", 1, push));
     it.insert(Instruction::new(1, "add", 0, add));
     it.insert(Instruction::new(2, "call", 1, call));
     it.insert(Instruction::new(3, "ret", 0, ret));
+    it.insert(Instruction::new(4, "jmp", 1, jump));
+    it.insert(Instruction::new(5, "if", 1, if_stmt));
 
     it
 }

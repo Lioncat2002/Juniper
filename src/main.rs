@@ -18,9 +18,27 @@ pub fn build_program(it: &InstructionTable<JnpVal>) -> Code<JnpVal> {
     Code::from(builder)
 }
 
+pub fn if_stmt_test(it: &InstructionTable<JnpVal>) -> Code<JnpVal>{
+    let mut builder = Builder::new(&it);
+    let condition=JnpVal::from(0);
+    builder.push("push", vec![condition]);
+
+    builder.push("if", vec![JnpVal::from("true_label")]);
+
+    builder.push("push", vec![JnpVal::from("it was false")]);
+    builder.push("jmp", vec![JnpVal::from("end")]);
+
+    builder.label("true_label");
+    builder.push("push", vec![JnpVal::from("it was true")]);
+
+    builder.label("end");
+    println!("{:?}", builder);
+    Code::from(builder)
+}
+
 fn main() {
     let it = instruction_table();
-    let code = build_program(&it);
+    let code = if_stmt_test(&it);
 
     let mut vm = VM::new(code, &it);
     vm.run();
