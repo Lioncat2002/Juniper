@@ -1,20 +1,43 @@
-use super::{code::Code, instruction::InstructionTable, stack::Stack};
+use super::{code::Code, frame::Frame, instruction::InstructionTable, stack::Stack};
 
 pub struct VM<'a, T> {
     pub code: Code<T>,
     pub instruction_table: &'a InstructionTable<T>,
     pub ip: usize, //instruction pointer
     pub operand_stack: Stack<T>,
+    pub call_stack: Stack<Frame>,
 }
 
 impl<'a, T> VM<'a, T> {
     pub fn new(code: Code<T>, instruction_table: &'a InstructionTable<T>) -> VM<'a, T> {
+        let frame = Frame::new(code.code.len());
+        let mut call_stack = Stack::new();
+        call_stack.push(frame);
+
         VM {
             code,
             instruction_table,
             ip: 0,
             operand_stack: Stack::new(),
+            call_stack,
         }
+    }
+
+    pub fn jump(&mut self, label: &str) {
+        self.ip = self
+            .code
+            .get_label_ip(label)
+            .expect(&format!("Attempted to jump to undefined label {label}"));
+    }
+
+    pub fn call(&mut self, label: &str) {
+        self.call_stack.push(Frame::new(self.ip));
+        self.jump(label);
+    }
+
+    pub fn ret(&mut self) {
+        let frame = self.call_stack.pop();
+        self.ip = frame.ret_addr;
     }
 
     pub fn operand_push(&mut self, value: T) {
@@ -43,7 +66,6 @@ impl<'a, T> VM<'a, T> {
             if self.ip == self.code.code.len() {
                 break;
             }
-
             let opcode = self.next_code();
             let arity = self.next_code();
 

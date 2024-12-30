@@ -1,3 +1,5 @@
+use core::fmt;
+
 use super::{builder::Builder, table::Table};
 
 pub struct Code<T> {
@@ -5,6 +7,17 @@ pub struct Code<T> {
     pub code: Vec<usize>,
     pub data: Vec<T>,
     pub labels: Vec<(usize, String)>,
+}
+
+impl<T> Code<T> {
+    pub fn get_label_ip(&self, name: &str) -> Option<usize> {
+        for label in self.labels.as_slice() {
+            if label.1 == name {
+                return Some(label.0);
+            }
+        }
+        None
+    }
 }
 
 impl<'a, T: std::fmt::Debug + std::cmp::PartialEq> From<Builder<'a, T>> for Code<T> {

@@ -1,3 +1,5 @@
+
+#[derive(Debug)]
 pub struct Stack<T>(Vec<T>);
 
 impl<T> Stack<T> {

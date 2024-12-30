@@ -1,7 +1,9 @@
 pub mod builder;
 pub mod code;
+pub mod frame;
 pub mod instruction;
 pub mod instruction_set;
+pub mod juniper_val;
 pub mod stack;
 pub mod table;
 pub mod vm;
