@@ -1,7 +1,16 @@
-@0 = 123
-@1 = 456
+@0 = Number(0)
+@1 = String("true_label")
+@2 = String("it was false")
+@3 = String("end")
+@4 = String("it was true")
 
 .main:
-  push @0
-  push @1
-  add
+        push @0
+        if @1
+        push @2
+        jmp @3
+
+.true_label:
+        push @4
+
+.end:
