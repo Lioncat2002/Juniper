@@ -1,6 +1,4 @@
-use core::fmt;
-
-use super::{builder::Builder, table::Table};
+use super::{builder::Builder, super::table::Table};
 
 pub struct Code<T> {
     pub symbols: Vec<(usize, String)>,

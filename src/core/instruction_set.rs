@@ -1,6 +1,6 @@
 use super::{
-    builder::Builder,
-    code::Code,
+    codegen::builder::Builder,
+    codegen::code::Code,
     instruction::{Instruction, InstructionTable},
     juniper_val::JnpVal,
     vm::VM,

@@ -1,6 +1,6 @@
 use std::fmt;
 
-use super::{instruction::InstructionTable, table::Table, write_once_table::WriteOnceTable};
+use super::{super::instruction::InstructionTable, super::table::Table, super::write_once_table::WriteOnceTable};
 
 pub struct Builder<'a, T: 'a + fmt::Debug + PartialEq> {
     pub instruction_table: &'a InstructionTable<T>,

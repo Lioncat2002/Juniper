@@ -1,4 +1,4 @@
-use super::{code::Code, frame::Frame, instruction::InstructionTable, stack::Stack};
+use super::{codegen::code::Code, frame::Frame, instruction::InstructionTable, stack::Stack};
 
 pub struct VM<'a, T> {
     pub code: Code<T>,
@@ -6,6 +6,7 @@ pub struct VM<'a, T> {
     pub ip: usize, //instruction pointer
     pub operand_stack: Stack<T>,
     pub call_stack: Stack<Frame>,
+    pub heap: [u8;1024]
 }
 
 impl<'a, T> VM<'a, T> {
@@ -20,6 +21,7 @@ impl<'a, T> VM<'a, T> {
             ip: 0,
             operand_stack: Stack::new(),
             call_stack,
+            heap: [0;1024]
         }
     }
 
