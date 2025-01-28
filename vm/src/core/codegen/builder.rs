@@ -108,6 +108,7 @@ impl<'a, T: 'a + fmt::Debug + PartialEq> fmt::Debug for Builder<'a, T> {
                 ip += 1;
                 let const_idx = self.instructions[ip];
                 result.push_str(&format!(" @{}", const_idx));
+                //result.push_str(&format!(" @{:?}",self.data[const_idx]));
             }
             result.push('\n');
 

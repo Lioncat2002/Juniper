@@ -2,14 +2,14 @@ use crate::core::juniper_val::JnpVal;
 
 use super::error::AllocationError;
 
-struct Frame{
+struct AllocFrame{
     data: JnpVal,
     idx:usize
 }
 
-impl Frame {
+impl AllocFrame {
     pub fn new(data: JnpVal,idx:usize)->Self{
-        Frame{
+        AllocFrame{
             data,
             idx
         }
@@ -17,7 +17,7 @@ impl Frame {
 }
 
 pub struct Heap {
-    memory: Vec<Frame>,
+    memory: Vec<AllocFrame>,
 }
 //TODO: rethink heap impl
 impl Heap {
@@ -34,7 +34,7 @@ impl Heap {
                 "Failed to allocate memory; not enough space available",
             ));
         }
-        self.memory.push(Frame::new(data, self.memory.len()-1));
+        self.memory.push(AllocFrame::new(data, self.memory.len()-1));
         Ok(self.memory.len())
     }
 

@@ -1,8 +1,6 @@
-use core::{codegen::builder::Builder, codegen::code::Code, instruction_set::instruction_table, juniper_val::JnpVal, vm::VM};
+use vm::core::{codegen::{builder::Builder, code::Code}, instruction_set::instruction_table, juniper_val::JnpVal, vm::VM};
 
-mod core;
-
-pub fn main() {
+fn main(){
     let it = instruction_table();
         let mut builder = Builder::new(&it);
         builder.push("push", vec![JnpVal::Number(2)]);
@@ -17,5 +15,5 @@ pub fn main() {
         let mut vm = VM::new(code, &it);
         vm.run();
         let result = vm.operand_pop();
-        println!("Value: {}",result.to_number().unwrap());
+        println!("{:?}",result);
 }

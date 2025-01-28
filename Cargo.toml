@@ -3,12 +3,12 @@ name = "juniper"
 version = "0.1.0"
 edition = "2021"
 
-[lib]
-name = "juniper"
-path = "src/lib.rs"
-
 [[bin]]
 name = "juniper"
-path = "src/main.rs"
+path="src/main.rs"
 
 [dependencies]
+vm={path = "./vm/"}
+
+[workspace]
+members = ["vm", "compiler"]
